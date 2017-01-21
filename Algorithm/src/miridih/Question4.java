@@ -9,7 +9,7 @@ public class Question4 {
 	private int money=0;
 	private List<Integer> basket = new ArrayList<Integer>();
 	private List<Integer> numbers = new ArrayList<Integer>();
-	private int day= 1;
+
 	
 	public static void main(String[] args) {
 		Question4 q4 = new Question4();
@@ -27,37 +27,48 @@ public class Question4 {
 				numbers.add(number3);
 			}
 			System.out.println(numbers);
+			findLargest();
+			money=0;
 		}			
 		scan.close();
 	}
 	
-	public void buy(){
-		int price = numbers.get(day-1);
+	public void buy(int day){
+		int price = numbers.get(day);
 		basket.add(price);
 		money = money-price;
-		day ++;
 	}
 	
-	public void sell(int stock){
-		for(int i=0; i<stock; i++){
-			money = money + numbers.get(day-1);
-			basket.remove(0);			
+	public void sell(int day){
+		//System.out.println(basket.size());
+		for(int i=0; i<basket.size(); i++){
+			money = money + numbers.get(day);	
 		}
+		basket.clear();
 	}
 	
 	public void doNothing(){
 	}
 	
-	public void plan(){
-		buy();
-		for(int i=1; i<numbers.size(); i++){
-						
+	public void findLargest(){
+		int largest = 0;
+		int compareInd = 0;
+		while(largest<=numbers.size()-1){
+			int start = largest;
+			for(int i=largest; i<numbers.size()-1; i++){
+				compareInd= i+1;
+				if(numbers.get(compareInd)>numbers.get(largest)){
+					largest = compareInd;
+				}
+			}
+			//System.out.println(largest);
+			for(int j =start; j<largest; j++){
+				buy(j);
+			}
+			sell(largest);
+			largest = largest + 1;
 		}
-		
-		day=0;
-		doNothing();
-		for(int i=1; i<numbers.size(); i++){
-			
-		}
+		System.out.println(money);
 	}
+	
 }
