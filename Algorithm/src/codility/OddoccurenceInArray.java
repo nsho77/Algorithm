@@ -23,6 +23,7 @@ public class OddoccurenceInArray {
 		for(int a : A){
 			if(a != 0){
 				answer =a;
+				break;
 			}
 		}
 		System.out.println(answer);
